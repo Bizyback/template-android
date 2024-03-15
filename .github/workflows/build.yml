@@ -1,0 +1,25 @@
+name: Build Gradle project
+on: push
+jobs:
+  build-gradle-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v2
+      - name: Create local.properties file
+        run: |
+          touch local.properties
+          echo "add things you want in your local file here"
+      - name: TODO to Issue
+        uses: alstr/todo-to-issue-action@v4.6.8
+        id: todo
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Run build with Gradle Wrapper
+        run: ./gradlew build
